@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PeerPrep — Campus Skill Exchange</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="bg-orbs">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+
+<nav id="main-nav">
+  <div class="nav-brand" onclick="goHome()">
+    <div class="nav-logo">PP</div>
+    <div class="nav-wordmark">Peer<span>Prep</span></div>
+  </div>
+  <div class="nav-links" id="nav-app-links" style="display:none">
+    <span class="nav-link active" id="nl-home" onclick="showPage('home')">Discover</span>
+    <span class="nav-link" id="nl-bounty" onclick="showPage('home'); scrollToBounty()">Bounty Board</span>
+    <span class="nav-link" id="nl-cv" onclick="showPage('cv')">AI CV Builder</span>
+    <span class="nav-link" id="nl-account" onclick="showPage('account')">My Account</span>
+  </div>
+  <div id="nav-auth">
+    <button class="nav-cta" onclick="showPage('login')">Join Free</button>
+  </div>
+</nav>
+
+<div id="toast"><span class="toast-icon">✓</span><span id="toast-msg">Done!</span></div>
+
+<div id="page-login" class="page active">
+  <div class="login-left">
+    <div class="login-deco"></div>
+    <div class="login-deco2"></div>
+    <div class="login-left-badge">✦ Campus Skill Exchange Platform</div>
+    <h1 class="login-headline">Trade Skills.<br>Grow <span>Together</span>.</h1>
+    <p class="login-sub">PeerPrep connects campus learners through skill exchange. Teach what you know, learn what you need — no tuition fees, just shared knowledge.</p>
+    <div class="login-stats">
+      <div>
+        <div class="login-stat-val">2,400+</div>
+        <div class="login-stat-lbl">Active Students</div>
+      </div>
+      <div>
+        <div class="login-stat-val">340</div>
+        <div class="login-stat-lbl">Skills Listed</div>
+      </div>
+      <div>
+        <div class="login-stat-val">8,900</div>
+        <div class="login-stat-lbl">Sessions Done</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="login-right">
+    <div class="login-form-header">
+      <h2>Welcome to PeerPrep</h2>
+      <p>Connect with your university email to get started.</p>
+    </div>
+    <div class="login-tabs">
+      <div class="login-tab active" id="tab-signin" onclick="switchLoginTab('signin')">Sign In</div>
+      <div class="login-tab" id="tab-signup" onclick="switchLoginTab('signup')">Create Account</div>
+    </div>
+
+    <div id="signin-form">
+      <div class="login-form">
+        <button class="login-google" onclick="loginWithGoogle()">
+          <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Continue with Google (@university.edu)
+        </button>
+        <div class="login-divider"><span>or sign in with email</span></div>
+        <div class="field">
+          <label>University Email</label>
+          <input type="email" class="field-input" id="signin-email" placeholder="you@university.edu" />
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input type="password" class="field-input" id="signin-pwd" placeholder="••••••••" />
+          <div class="login-forget">Forgot password?</div>
+        </div>
+        <button class="login-form-btn" onclick="doLogin()">Sign In to PeerPrep →</button>
+      </div>
+    </div>
+
+    <div id="signup-form" style="display:none">
+      <div class="login-form">
+        <button class="login-google" onclick="loginWithGoogle()">
+          <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Sign up with Google (@university.edu)
+        </button>
+        <div class="login-divider"><span>or create account</span></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div class="field">
+            <label>First Name</label>
+            <input type="text" class="field-input" id="reg-fname" placeholder="Aryan" />
+          </div>
+          <div class="field">
+            <label>Last Name</label>
+            <input type="text" class="field-input" id="reg-lname" placeholder="Sharma" />
+          </div>
+        </div>
+        <div class="field">
+          <label>University Email</label>
+          <input type="email" class="field-input" id="reg-email" placeholder="you@university.edu" />
+          <div class="domain-hint">Must be your official university email. <span>@university.edu domains only.</span></div>
+        </div>
+        <div class="field">
+          <label>Department</label>
+          <select class="field-input" id="reg-dept">
+            <option value="">Select your department…</option>
+            <option>Computer Science & Engineering</option>
+            <option>Electronics & Communication</option>
+            <option>Mechanical Engineering</option>
+            <option>Business Administration</option>
+            <option>Design & Creative Arts</option>
+            <option>Mathematics & Physics</option>
+            <option>Humanities & Social Sciences</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input type="password" class="field-input" id="reg-pwd" placeholder="Min. 8 characters" />
+        </div>
+        <button class="login-form-btn" onclick="doRegister()">Create Account &amp; Join PeerPrep →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="page-home" class="page">
+  <div class="match-banner" id="match-banner">
+    <span>🔗</span>
+    <span>New Match! <strong>Priya Nair</strong> wants to learn React &amp; knows Figma — just like you need. <span style="text-decoration:underline;cursor:pointer;color:var(--mint-light)">Connect →</span></span>
+    <span class="match-banner-close" onclick="this.parentElement.style.display='none'">✕</span>
+  </div>
+
+  <div class="content">
+    <div class="hero fade-in">
+      <div>
+        <div class="hero-tag"><div class="hero-pulse"></div> Live Campus Network</div>
+        <h1>Swap Skills.<br>Build your <span>Future</span>.</h1>
+        <p class="hero-sub">Join 2,400+ students trading expertise on campus. Earn PeerPoints by teaching, spend them to learn. Everyone wins.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary btn-lg" onclick="openPostBounty()">✦ Post a Request</button>
+          <button class="btn btn-outline btn-lg" onclick="showPage('account')">My Profile →</button>
+        </div>
+      </div>
+      <div class="hero-stats-card fade-in stagger-2">
+        <div class="hero-stats-title">Live Platform Stats</div>
+        <div class="hero-stat-row">
+          <div>
+            <div class="hero-stat-n">2,418</div>
+            <div class="hero-stat-l">Active Learners</div>
+          </div>
+          <div style="font-size:24px">🎓</div>
+        </div>
+        <div class="hero-stat-row">
+          <div>
+            <div class="hero-stat-n">124</div>
+            <div class="hero-stat-l">Sessions Today</div>
+          </div>
+          <div style="font-size:24px">📅</div>
+        </div>
+        <div class="hero-stat-row">
+          <div>
+            <div class="hero-stat-n">340</div>
+            <div class="hero-stat-l">Skills Available</div>
+          </div>
+          <div style="font-size:24px">💡</div>
+        </div>
+        <div class="hero-stat-row">
+          <div>
+            <div class="hero-stat-n">98%</div>
+            <div class="hero-stat-l">Satisfaction Rate</div>
+          </div>
+          <div style="font-size:24px">⭐</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="search-section fade-in stagger-2">
+      <div class="search-bar-wrap">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8888AA" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="search-input" placeholder="Search for a skill — Python, UI Design, Calculus, Guitar…" oninput="filterCards()" />
+        <button class="search-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          Search
+        </button>
+      </div>
+      <div class="filter-chips">
+        <span class="chip active" onclick="setFilter(this,'All')">All Skills</span>
+        <span class="chip" onclick="setFilter(this,'Tech')">💻 Tech</span>
+        <span class="chip" onclick="setFilter(this,'Design')">🎨 Design</span>
+        <span class="chip" onclick="setFilter(this,'Academic')">📚 Academic</span>
+        <span class="chip" onclick="setFilter(this,'Languages')">🌐 Languages</span>
+        <span class="chip" onclick="setFilter(this,'Music')">🎵 Music</span>
+        <span class="chip" onclick="setFilter(this,'Business')">📊 Business</span>
+        <span class="chip" onclick="setFilter(this,'Soft Skills')">🧠 Soft Skills</span>
+      </div>
+    </div>
+
+    <div class="feed-section">
+      <div class="feed-header">
+        <h2>Available Peer Tutors</h2>
+        <button class="btn btn-mint btn-sm" onclick="openPostBounty()">+ Post Bounty</button>
+      </div>
+      <div class="feed-grid" id="feed-grid">
+      </div>
+    </div>
+
+    <div class="bounty-section" id="bounty-section">
+      <div class="section-label">Community Requests</div>
+      <h2 class="section-title">The <span>Bounty Board</span></h2>
+      <div class="bounty-grid" id="bounty-grid">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="page-account" class="page">
+  <div class="content">
+    <div class="account-layout">
+      <div class="account-sidebar">
+        <div class="profile-card">
+          <div class="profile-avatar-lg" id="acc-avatar">AS</div>
+          <div class="profile-name" id="acc-name">Aryan Sharma</div>
+          <div class="profile-dept" id="acc-dept">Computer Science, Year 3</div>
+          <div class="profile-email" id="acc-email">aryan@university.edu</div>
+          <div class="profile-rep">
+            <div>
+              <div class="profile-rep-val">⭐ 4.8</div>
+            </div>
+            <div class="profile-rep-lbl">Campus<br>Reputation Score</div>
+          </div>
+          <div class="profile-points-bar mt-16">
+            <div class="points-bar-label">
+              <span>🪙 PeerPoints</span>
+              <span id="user-points-disp">340 / 500</span>
+            </div>
+            <div class="points-bar-track">
+              <div class="points-bar-fill" id="points-bar" style="width:68%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="sidebar-nav">
+          <div class="sidebar-nav-item active" onclick="switchAccTab('skills',this)"><span class="s-icon">💡</span> My Skills</div>
+          <div class="sidebar-nav-item" onclick="switchAccTab('sessions',this)"><span class="s-icon">📅</span> Sessions</div>
+          <div class="sidebar-nav-item" onclick="switchAccTab('badges',this)"><span class="s-icon">🏆</span> Badges</div>
+          <div class="sidebar-nav-item" onclick="switchAccTab('settings',this)"><span class="s-icon">⚙️</span> Settings</div>
+          <div class="sidebar-nav-item" onclick="doLogout()"><span class="s-icon">🚪</span> Sign Out</div>
+        </div>
+      </div>
+
+      <div class="account-main" id="account-main">
+        <div id="acc-tab-skills" class="tab-active">
+          <div class="acc-section-title">My Skill Ledger</div>
+          <div class="skills-grid">
+            <div class="skill-panel">
+              <div class="skill-panel-header">
+                <div class="skill-panel-title">Skills I <span style="color:var(--mint)">Teach</span></div>
+                <div class="skill-panel-icon">🎓</div>
+              </div>
+              <div class="skill-list" id="teach-list">
+              </div>
+              <div class="add-skill-btn" onclick="openAddSkill('teach')">+ Add Skill I Can Teach</div>
+            </div>
+            <div class="skill-panel">
+              <div class="skill-panel-header">
+                <div class="skill-panel-title">Skills I <span style="color:#FF8C42">Want</span> to Learn</div>
+                <div class="skill-panel-icon">📖</div>
+              </div>
+              <div class="skill-list" id="learn-list">
+              </div>
+              <div class="add-skill-btn" onclick="openAddSkill('learn')">+ Add Skill I Want to Learn</div>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:4px">
+            <div style="background:white;border:1px solid var(--border);border-radius:var(--r-md);padding:20px;text-align:center;box-shadow:var(--shadow-sm)">
+              <div style="font-family:var(--font-display);font-size:28px;font-weight:800;color:var(--indigo)">12</div>
+              <div style="font-size:12px;color:var(--ink-faint);margin-top:4px">Sessions Taught</div>
+            </div>
+            <div style="background:white;border:1px solid var(--border);border-radius:var(--r-md);padding:20px;text-align:center;box-shadow:var(--shadow-sm)">
+              <div style="font-family:var(--font-display);font-size:28px;font-weight:800;color:var(--mint)">8</div>
+              <div style="font-size:12px;color:var(--ink-faint);margin-top:4px">Sessions Learnt</div>
+            </div>
+            <div style="background:white;border:1px solid var(--border);border-radius:var(--r-md);padding:20px;text-align:center;box-shadow:var(--shadow-sm)">
+              <div style="font-family:var(--font-display);font-size:28px;font-weight:800;color:#FF8C42">340</div>
+              <div style="font-size:12px;color:var(--ink-faint);margin-top:4px">PeerPoints</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="acc-tab-sessions" style="display:none">
+          <div class="acc-section-title">My Sessions</div>
+          <div class="session-list" id="session-list">
+          </div>
+        </div>
+
+        <div id="acc-tab-badges" style="display:none">
+          <div class="acc-section-title">My Badges &amp; Achievements</div>
+          <div class="badges-grid" id="badges-grid">
+          </div>
+        </div>
+
+        <div id="acc-tab-settings" style="display:none">
+          <div class="acc-section-title">Profile Settings</div>
+          <div style="background:white;border:1px solid var(--border);border-radius:var(--r-md);padding:32px;box-shadow:var(--shadow-sm)">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+              <div class="field">
+                <label>First Name</label>
+                <input type="text" class="field-input" id="set-fname" value="Aryan" />
+              </div>
+              <div class="field">
+                <label>Last Name</label>
+                <input type="text" class="field-input" id="set-lname" value="Sharma" />
+              </div>
+              <div class="field">
+                <label>Year of Study</label>
+                <select class="field-input" id="set-year">
+                  <option>Year 1</option><option>Year 2</option>
+                  <option selected>Year 3</option><option>Year 4</option><option>Postgraduate</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Department</label>
+                <select class="field-input" id="set-dept">
+                  <option selected>Computer Science & Engineering</option>
+                  <option>Electronics & Communication</option>
+                  <option>Mechanical Engineering</option>
+                  <option>Business Administration</option>
+                  <option>Design & Creative Arts</option>
+                </select>
+              </div>
+            </div>
+            <div class="field mt-16">
+              <label>Bio / About Me</label>
+              <textarea class="field-input" placeholder="Tell peers about yourself, your interests, and learning goals…">Passionate about full-stack development. Love React and Node.js. Looking to improve my design skills and learn French.</textarea>
+            </div>
+            <div class="field mt-16">
+              <label>Campus Location Preference</label>
+              <input type="text" class="field-input" value="Library Block B, Lab 3" />
+            </div>
+            <div style="display:flex;gap:12px;margin-top:24px">
+              <button class="btn btn-primary" onclick="saveSettings()">Save Changes</button>
+              <button class="btn btn-outline" onclick="showPage('cv')">Build My CV →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="page-cv" class="page">
+  <div class="content">
+    <div class="cv-layout">
+      <div class="section-label">AI-Powered Tool</div>
+      <h2 class="section-title">CV &amp; Resume <span>Builder</span></h2>
+      <p style="color:var(--ink-soft);margin-top:8px;max-width:560px">Our AI crafts a tailored, professional CV based on your skills and experiences. Choose a template, fill in your details, and let the magic happen.</p>
+
+      <div class="cv-template-tabs mt-24">
+        <span class="cv-template-tab active" onclick="setTemplate(this,'modern')">Modern</span>
+        <span class="cv-template-tab" onclick="setTemplate(this,'classic')">Classic</span>
+        <span class="cv-template-tab" onclick="setTemplate(this,'creative')">Creative</span>
+        <span class="cv-template-tab" onclick="setTemplate(this,'minimal')">Minimal</span>
+        <span class="cv-template-tab" onclick="setTemplate(this,'academic')">Academic</span>
+      </div>
+
+      <div class="cv-builder-grid">
+        <div class="cv-form-panel">
+          <h3>Your Details</h3>
+          <div class="cv-fields">
+            <div class="field">
+              <label>Full Name</label>
+              <input type="text" class="field-input" id="cv-name" placeholder="Aryan Sharma" value="Aryan Sharma" />
+            </div>
+            <div class="field">
+              <label>Target Role / Position</label>
+              <input type="text" class="field-input" id="cv-role" placeholder="e.g. Frontend Developer Intern" />
+            </div>
+            <div class="field">
+              <label>University & Degree</label>
+              <input type="text" class="field-input" id="cv-edu" placeholder="B.Tech CSE, VIT University, 2025" />
+            </div>
+            <div class="field">
+              <label>Skills (comma separated)</label>
+              <input type="text" class="field-input" id="cv-skills" placeholder="React, Node.js, Python, Figma, SQL" value="React, Node.js, Python, Figma, SQL, Git" />
+            </div>
+            <div class="field">
+              <label>Projects / Experience</label>
+              <textarea class="field-input" id="cv-exp" placeholder="List your projects, internships, or relevant experience…">Built a real-time chat app with Socket.IO and React. Led a team of 4 for a hackathon project on smart campus navigation. Interned at StartupXYZ as a frontend developer for 2 months.</textarea>
+            </div>
+            <div class="field">
+              <label>Achievements & Extracurriculars</label>
+              <textarea class="field-input" id="cv-ach" placeholder="Awards, clubs, volunteering, leadership roles…" style="min-height:70px">Winner, Smart India Hackathon 2024. Secretary, Coding Club. Volunteer mentor at local school.</textarea>
+            </div>
+            <div class="field">
+              <label>Extra Instructions for AI <span style="color:var(--ink-faint);font-weight:400">(optional)</span></label>
+              <input type="text" class="field-input" id="cv-extra" placeholder="e.g. Keep it to one page, emphasise leadership skills" />
+            </div>
+            <button class="btn btn-primary" style="width:100%;padding:14px;border-radius:var(--r-sm);font-size:15px" onclick="generateCV()">
+              ✦ Generate My CV with AI
+            </button>
+          </div>
+        </div>
+
+        <div class="cv-ai-output">
+          <div class="cv-ai-header">
+            <h3>AI-Generated CV</h3>
+            <div class="ai-badge">✦ Claude AI</div>
+          </div>
+          <div class="cv-output-area" id="cv-output">
+            <div class="cv-placeholder">
+              <div class="cv-placeholder-icon">📄</div>
+              <p>Fill in your details and click<br><strong>Generate My CV</strong> to see the magic.</p>
+            </div>
+          </div>
+          <div class="cv-actions mt-16" id="cv-actions" style="display:none">
+            <button class="btn btn-primary btn-sm" onclick="copyCV()">📋 Copy</button>
+            <button class="btn btn-mint btn-sm" onclick="downloadCV()">⬇ Download .txt</button>
+            <button class="btn btn-outline btn-sm" onclick="generateCV()">↺ Regenerate</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-skill">
+  <div class="modal" style="position:relative">
+    <div class="modal-close" onclick="closeModal('modal-skill')">✕</div>
+    <h3 style="font-family:var(--font-display);font-size:22px;font-weight:800;color:var(--indigo);margin-bottom:6px" id="skill-modal-title">Add a Skill</h3>
+    <p style="color:var(--ink-faint);font-size:13px;margin-bottom:24px">Tag your skill precisely so peers can find you.</p>
+    <div class="cv-fields">
+      <div class="field">
+        <label>Skill Name</label>
+        <input type="text" class="field-input" id="new-skill-name" placeholder="e.g. React.js, Calculus, Guitar" />
+      </div>
+      <div class="field">
+        <label>Category</label>
+        <select class="field-input" id="new-skill-cat">
+          <option>Tech</option><option>Design</option><option>Academic</option>
+          <option>Languages</option><option>Music</option><option>Business</option><option>Soft Skills</option>
+        </select>
+      </div>
+      <div class="field" id="skill-level-field">
+        <label>Proficiency Level</label>
+        <select class="field-input" id="new-skill-level">
+          <option>Beginner</option><option>Intermediate</option><option selected>Advanced</option><option>Expert</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" style="width:100%;padding:13px;border-radius:var(--r-sm)" onclick="addSkillFromModal()">Add Skill</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-bounty">
+  <div class="modal" style="position:relative">
+    <div class="modal-close" onclick="closeModal('modal-bounty')">✕</div>
+    <h3 style="font-family:var(--font-display);font-size:22px;font-weight:800;color:var(--indigo);margin-bottom:6px">Post to Bounty Board</h3>
+    <p style="color:var(--ink-faint);font-size:13px;margin-bottom:24px">Request urgent help and offer something in return.</p>
+    <div class="cv-fields">
+      <div class="field">
+        <label>What do you need help with?</label>
+        <input type="text" class="field-input" id="b-need" placeholder="e.g. Help debugging a C++ pointer issue" />
+      </div>
+      <div class="field">
+        <label>What will you offer in return?</label>
+        <input type="text" class="field-input" id="b-offer" placeholder="e.g. 30-min Figma crash course" />
+      </div>
+      <div class="field">
+        <label>Urgency</label>
+        <select class="field-input" id="b-urgency">
+          <option value="normal">Normal</option><option value="high">High (⚡ Urgent)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>PeerPoints Reward</label>
+        <input type="number" class="field-input" id="b-points" placeholder="50" min="10" max="200" value="50" />
+      </div>
+      <button class="btn btn-mint" style="width:100%;padding:13px;border-radius:var(--r-sm);font-weight:700" onclick="postBounty()">Post Bounty →</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-connect">
+  <div class="modal" style="position:relative;text-align:center">
+    <div class="modal-close" onclick="closeModal('modal-connect')">✕</div>
+    <div style="font-size:48px;margin-bottom:16px" id="connect-avatar-big">👤</div>
+    <h3 style="font-family:var(--font-display);font-size:22px;font-weight:800;color:var(--indigo);margin-bottom:4px" id="connect-name">Peer Name</h3>
+    <p style="color:var(--ink-faint);font-size:13px;margin-bottom:24px" id="connect-dept">Department</p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:20px" id="connect-tags"></div>
+    <div style="background:var(--mint-pale);border-radius:var(--r-sm);padding:16px;margin-bottom:24px;text-align:left">
+      <div style="font-size:12px;font-weight:700;color:var(--indigo);margin-bottom:4px">📅 Book a Session</div>
+      <div style="font-size:13px;color:var(--ink-soft)">They're available: <strong id="connect-avail">Weekdays 2–6 PM, Library</strong></div>
+    </div>
+    <div style="display:flex;gap:12px;justify-content:center">
+      <button class="btn btn-primary" onclick="sendRequest()">Send Session Request</button>
+      <button class="btn btn-outline" onclick="closeModal('modal-connect')">Maybe Later</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
